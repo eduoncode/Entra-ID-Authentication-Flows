@@ -60,7 +60,7 @@ export default async function Home() {
         </div>
 
         <div>
-          <h2 className="font-semibold text-lg text-blue-700">
+          <h2 className="font-semibold text-lg text-orange-700">
             Acesso On-Behalf-Of User
           </h2>
           <pre className="bg-slate-100 p-4 mt-2 text-sm text-black rounded">
