@@ -1,8 +1,7 @@
-import NextAuth from "next-auth";
+import NextAuth, { type Session } from "next-auth";
 import MicrosoftEntraID from "next-auth/providers/microsoft-entra-id";
 import type { JWT } from "next-auth/jwt";
-import { Session } from "next-auth";
-import { Account } from "next-auth";
+import type { Account } from "next-auth";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -18,7 +17,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
   ],
   callbacks: {
-    async jwt({ token, account }: { token: JWT; account: Account | null }) {
+    async jwt({ token, account }: { token: JWT; account?: Account | null }) {
       if (account) {
         token.accessToken = account.access_token;
       }
