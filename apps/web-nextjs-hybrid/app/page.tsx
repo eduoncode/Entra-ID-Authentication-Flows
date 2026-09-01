@@ -2,7 +2,6 @@ import { auth } from "@/auth";
 
 export default async function Home() {
   const session = await auth();
-  console.log(JSON.stringify(session, null, 2));
 
   if (!session) {
     return (
