@@ -8,8 +8,10 @@ export class UserController {
   @Get('profile')
   @Scopes('access_as_user')
   getUserProfile(@Req() req: any) {
+    console.log(req.user);
     return {
       message: 'Acesso concedido via Delegated Scope: access_as_user',
+      scope: req.user.scp,
       user: req.user.preferred_username,
     };
   }

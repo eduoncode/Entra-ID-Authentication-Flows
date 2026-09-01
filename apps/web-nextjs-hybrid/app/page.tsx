@@ -12,25 +12,48 @@ export default async function Home() {
           await signIn("microsoft-entra-id");
         }}
       >
-        <button type="submit">Login com Entra ID</button>
+        <button type="submit" className="bg-blue-600 text-white p-2 rounded">
+          Login com Entra ID
+        </button>
       </form>
     );
   }
 
-  const res = await fetch("http://localhost:3002/user/profile", {
-    headers: {
-      Authorization: `Bearer ${session.accessToken}`,
-    },
+  const userRes = await fetch("http://localhost:3002/user/profile", {
+    headers: { Authorization: `Bearer ${session.accessToken}` },
   });
+  const userData = await userRes.json();
 
-  const apiData = await res.json();
+  const adminRes = await fetch("http://localhost:3002/admin/dashboard", {
+    headers: { Authorization: `Bearer ${session.accessToken}` },
+  });
+  const adminData = await adminRes.json();
 
   return (
     <main className="p-8">
-      <h1>Bem-vindo, {session.user?.name}</h1>
-      <pre className="bg-gray-100 p-4 mt-4 text-black">
-        {JSON.stringify(apiData, null, 2)}
-      </pre>
+      <h1 className="text-2xl font-bold mb-4">
+        Bem-vindo, {session.user?.name}
+      </h1>
+
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <h2 className="font-semibold text-lg text-blue-700">
+            Acesso User (Scopes)
+          </h2>
+          <pre className="bg-slate-100 p-4 mt-2 text-sm text-black rounded">
+            {JSON.stringify(userData, null, 2)}
+          </pre>
+        </div>
+
+        <div>
+          <h2 className="font-semibold text-lg text-red-700">
+            Acesso Admin (Roles)
+          </h2>
+          <pre className="bg-slate-200 p-4 mt-2 text-sm text-black rounded">
+            {JSON.stringify(adminData, null, 2)}
+          </pre>
+        </div>
+      </div>
     </main>
   );
 }

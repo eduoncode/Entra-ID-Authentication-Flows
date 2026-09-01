@@ -1,5 +1,5 @@
 import { Roles, RolesGuard } from '@auth/guards/roles.guard';
-import { Controller, Get, UseGuards } from '@nestjs/common';
+import { Controller, Get, Req, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
 @Controller('admin')
@@ -7,7 +7,10 @@ import { AuthGuard } from '@nestjs/passport';
 export class AdminController {
   @Get('dashboard')
   @Roles('Admin.ReadWrite')
-  getAdminData() {
-    return { message: 'Acesso concedido via App Role: Admin.ReadWrite' };
+  getAdminData(@Req() req: any) {
+    return {
+      message: 'Acesso concedido via App Role: Admin.ReadWrite',
+      roles: req.user.roles,
+    };
   }
 }
