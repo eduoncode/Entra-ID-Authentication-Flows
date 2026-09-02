@@ -1,14 +1,17 @@
-import { auth } from "@/auth";
+import { auth, signIn } from "@/auth";
 
 export default async function Home() {
   const session = await auth();
+
+  if (session?.error === "RefreshAccessTokenError") {
+    await signIn("microsoft-entra-id");
+  }
 
   if (!session) {
     return (
       <form
         action={async () => {
           "use server";
-          const { signIn } = await import("@/auth");
           await signIn("microsoft-entra-id");
         }}
       >
@@ -40,12 +43,12 @@ export default async function Home() {
         Bem-vindo, {session.user?.name}
       </h1>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-3 gap-4">
         <div>
           <h2 className="font-semibold text-lg text-blue-700">
             Acesso User (Scopes)
           </h2>
-          <pre className="bg-slate-100 p-4 mt-2 text-sm text-black rounded">
+          <pre className="bg-slate-100 p-4 mt-2 text-sm text-black rounded overflow-x-auto">
             {JSON.stringify(userData, null, 2)}
           </pre>
         </div>
@@ -54,16 +57,16 @@ export default async function Home() {
           <h2 className="font-semibold text-lg text-red-700">
             Acesso Admin (Roles)
           </h2>
-          <pre className="bg-slate-200 p-4 mt-2 text-sm text-black rounded">
+          <pre className="bg-slate-200 p-4 mt-2 text-sm text-black rounded overflow-x-auto">
             {JSON.stringify(adminData, null, 2)}
           </pre>
         </div>
 
         <div>
           <h2 className="font-semibold text-lg text-orange-700">
-            Acesso On-Behalf-Of User
+            Acesso On-Behalf-Of
           </h2>
-          <pre className="bg-slate-100 p-4 mt-2 text-sm text-black rounded">
+          <pre className="bg-orange-100 p-4 mt-2 text-sm text-black rounded overflow-x-auto">
             {JSON.stringify(oboData, null, 2)}
           </pre>
         </div>
