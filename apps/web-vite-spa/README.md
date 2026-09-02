@@ -1,75 +1,10 @@
-# React + TypeScript + Vite
+# Web Vite SPA
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicação com client-side rendering utilizando React puro e Vite. Ideal para projetos clássicos de React que não utilizam SSR (Server-Side Rendering) e rodam 100% no navegador.
 
-Currently, two official plugins are available:
+## Responsabilidades
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
-
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
+- **Cliente público (PKCE):** opera sem `client_secret`. A segurança é garantida pela configuração de plataforma Single-page application no Entra ID e pelo fluxo Authorization Code com PKCE.
+- **Tratamento de pop-ups e iframes:** implementa um bloqueio de renderização no `main.tsx` (`if (isIframe || isPopup)`). Isso impede que o React carregue a aplicação inteira dentro da janela de login do Entra ID, solucionando o erro `block_nested_popups` do MSAL.
+- **Componentização declarativa:** utiliza os componentes `<AuthenticatedTemplate>` e `<UnauthenticatedTemplate>` do `@azure/msal-react` para orquestrar a exibição da UI sem múltiplos `useEffect` ou checagens manuais de estado.
+- **Aquisição silenciosa:** demonstra o padrão base de `acquireTokenSilent()` sem interceptors automáticos, buscando o token no `sessionStorage` ou renovando-o em background via iframe invisível antes do `fetch` manual para a API NestJS.
