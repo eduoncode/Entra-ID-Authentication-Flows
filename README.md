@@ -78,3 +78,15 @@ Para executar este ecossistema completo, é necessário criar cinco registros de
 - Selecione **Application permissions** (não **Delegated**) e marque a role `Admin.ReadWrite`.
 
 - **Obrigatório:** clique em **Grant admin consent for [Tenant]**.
+
+### 6. CLI App (Desktop/Headless)
+
+- Crie um novo registro com o nome cli-app.
+
+- Em **Authentication** > **Platform configurations** > **Add a platform** > **Mobile and desktop applications**, marque a opção que contém a URI http://localhost. Isso permite que o MSAL levante um servidor web temporário em portas dinâmicas durante o fluxo interativo.
+
+- Na tela do **Registro de aplicativo**, clique em **Authentication** > **Configurações** e ative a opção **Permitir fluxos de cliente público**
+
+- **Não crie um client secret.** Trata-se de um cliente público.
+
+- Em **API permissions**, clique em Add a permission > My APIs e selecione api-nestjs-backend. Marque a permissão delegada access_as_user e conceda o Admin consent.
