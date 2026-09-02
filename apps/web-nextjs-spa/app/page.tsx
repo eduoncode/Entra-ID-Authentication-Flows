@@ -1,5 +1,6 @@
 "use client";
 
+import { api } from "@/lib/api";
 import {
   useMsal,
   AuthenticatedTemplate,
@@ -23,18 +24,9 @@ export default function Home() {
 
   const fetchApi = async () => {
     try {
-      const response = await instance.acquireTokenSilent({
-        ...loginRequest,
-        account: accounts[0],
-      });
+      const res = await api.get("/user/profile");
 
-      const res = await fetch("http://localhost:3002/user/profile", {
-        headers: {
-          Authorization: `Bearer ${response.accessToken}`,
-        },
-      });
-
-      setApiData(await res.json());
+      setApiData(await res.data);
     } catch (error) {
       console.error("Falha ao buscar dados", error);
     }
