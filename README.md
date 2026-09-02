@@ -2,6 +2,10 @@
 
 Repositório central de arquitetura e implementação de fluxos modernos de autenticação utilizando o Microsoft Entra ID. O projeto oferece suporte a requisições delegadas (usuários) e M2M (máquina para máquina), conforme a documentação da Microsoft.
 
+Construir ecossistemas corporativos exige um domínio claro sobre gestão de identidade e segurança. No entanto, sempre enfrentei o desafio real de entender quando e onde aplicar cada fluxo de autenticação do padrão OAuth 2.0, além de como implementá-los de ponta a ponta em diferentes contextos. A documentação oficial da Microsoft, embora vasta e detalhada, muitas vezes carece de exemplos práticos que conectem todas as pontas de uma arquitetura moderna.
+
+Este repositório nasceu dessa dor técnica. Ele foi desenhado como uma arquitetura de referência para servir como um laboratório prático e um guia definitivo. O objetivo é desmistificar o Microsoft Entra ID, provando na prática como integrar Single-Page Applications, clientes híbridos (BFF), rotinas de background (M2M) e ferramentas de terminal (CLI) em um único ecossistema centralizado, escalável e seguro.
+
 ## Arquitetura do Monorepo
 
 Este projeto utiliza Turborepo/NPM Workspaces para gerenciar os seguintes módulos:
