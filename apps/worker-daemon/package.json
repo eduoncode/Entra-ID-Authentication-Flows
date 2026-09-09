@@ -6,7 +6,7 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@azure/msal-node": "^2.6.0",
+    "@azure/msal-node": "^6.0.0",
     "dotenv": "^17.4.2"
   },
   "devDependencies": {
